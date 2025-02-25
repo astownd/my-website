@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alec Townes</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js">            window.addEventListener("scroll", () => {
+                const scrollPosition = window.scrollY;
+                const gradientStart = Math.min(scrollPosition / window.innerHeight, 1);
+                
+                heroText.style.background = `linear-gradient(to bottom, rgba(42, 42, 42, ${1 - gradientStart}), rgba(85, 85, 85, ${1 - gradientStart}), rgba(136, 136, 136, ${1 - gradientStart}))`;
+                heroText.style.webkitBackgroundClip = "text";
+                heroText.style.webkitTextFillColor = "transparent";
+                
+                if (scrollPosition > 50) {
+                    hero.classList.add("shrink");
+                } else {
+                    hero.classList.remove("shrink");
+                }
+            });
+                let idleTimer;
+        const heroText = document.getElementById("hero-text");
+        function startIdleTimer() {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+                animateLetters();
+            }, 15000); // 15 seconds idle time
+        }
+        function animateLetters() {
+            const text = heroText.innerText;
+            heroText.innerHTML = "";
+            text.split("").forEach((char, index) => {
+                const span = document.createElement("span");
+                span.innerText = char;
+                span.style.display = "inline-block";
+                span.style.transition = "transform 10s ease-in-out";
+                heroText.appendChild(span);
+            });
+            setTimeout(() => {
+                heroText.querySelectorAll("span").forEach((span, index) => {
+                    const xOffset = (Math.random() - 0.5) * 200;
+                    const yOffset = (Math.random() - 0.5) * 200;
+                    span.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
+                });
+            }, 100);
+            setTimeout(() => {
+                heroText.querySelectorAll("span").forEach((span) => {
+                    span.style.transform = "translate(0, 0)";
+                });
+            }, 25000); // 15 seconds of movement + 10 seconds to reunite
+        }
+        document.addEventListener("mousemove", startIdleTimer);
+        document.addEventListener("keydown", startIdleTimer);
+        startIdleTimer();
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "San Francisco", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .hero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: radial-gradient(circle at top, #000 20%, #222 40%, #333 60%, transparent 80%), linear-gradient(to bottom, #000, #222, #333);
+            animation: waveBackground 10s infinite ease-in-out;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+            position: relative;
+            transition: height 0.5s ease-in-out;
+        }
+        .hero-text {
+            background: linear-gradient(to bottom, #2a2a2a, #555, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 6rem;
+            transition: font-size 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .shrink {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .shrink .hero-text {
+            font-size: 2rem;
+            padding: 10px 0;
+        }
+        .scroll-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            color: black;
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 1s ease-out;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .contact-form label {
+            align-self: flex-start;
+            margin-bottom: 5px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        .contact-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #333;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .contact-form button:hover {
+            background: #555;
+        }
+        .contact-form button:disabled {
+            background: #888;
+            cursor: not-allowed;
+        }
+    @keyframes waveBackground {
+            0% { background-position: 0% 0%; transform: scale(1); }
+            25% { background-position: 25% 25%; transform: scale(1.05); }
+            50% { background-position: 50% 50%; transform: scale(1.1); }
+            75% { background-position: 75% 25%; transform: scale(1.05); }
+            100% { background-position: 100% 0%; transform: scale(1); }
+        }
+            25% { background-position: 25% 15%; }
+            50% { background-position: 50% 30%; }
+            75% { background-position: 75% 15%; }
+            100% { background-position: 100% 0%; }
+        }
+            50% { background-position: 50% 50%; }
+            100% { background-position: 100% 100%; }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero" id="hero">
+        <div class="hero-text" id="hero-text">Alec Townes</div>
+    </section>
+    
+    <section class="scroll-section" id="contact">
+        <form class="contact-form" id="contact-form" name="contact" method="POST" data-netlify="true">
+            <h2 style="text-align: center; width: 100%;">Contact Me</h2>
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" placeholder="Your Message" rows="4" required></textarea>
+
+            <button type="submit" id="submit-button">Send</button>
+        </form>
+    </section>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hero = document.getElementById("hero");
+            const heroText = document.getElementById("hero-text");
+
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 50) {
+                    hero.classList.add("shrink");
+                } else {
+                    hero.classList.remove("shrink");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
