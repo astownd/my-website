@@ -1,0 +1,125 @@
+/* 
+  1. Reset body to fill window
+  2. Hide overflow in case background moves outside bounds
+  3. Apply the metallic wave background using a multi-stop gradient
+     that moves infinitely.
+*/
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+
+  /* Metallic-like gradient with multiple stops for variety */
+  background: linear-gradient(
+    45deg, 
+    #c0c0c0, /* light silver */
+    #d9d9d9, /* silver alloy */
+    #808080, /* gray steel */
+    #b0b0b0  /* mid-tone silver */
+  );
+  background-size: 400% 400%;
+
+  /* Infinite waving animation */
+  animation: waveBG 10s ease-in-out infinite alternate;
+
+  /* Center the text horizontally and vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Keyframes for the background's "waving" or "pulsing" movement */
+@keyframes waveBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 
+  Main heading styles:
+  1. San Francisco font with close fallback
+  2. Large bold text
+  3. Uppercase
+  4. Complex animations: color gradient shift, pulsing, moving/rotating
+*/
+h1 {
+  font-family: -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue",
+               Helvetica, Arial, sans-serif;
+  font-size: 8vw;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0;
+
+  /* 
+    Create a gradient for the text fill and clip it 
+    so the text is "filled" by the gradient.
+    We'll animate the gradient positions for a steel-to-black effect.
+  */
+  background: linear-gradient(
+    90deg,
+    #c0c0c0, /* steel/silver */
+    #000000  /* black */
+  );
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 
+    We combine multiple animations:
+    1) textColorShift: smoothly changes the text gradient’s position
+    2) textPulse: gently scales the text
+    3) textMove: slight horizontal/rotational shifting
+  */
+  animation: 
+    textColorShift 6s ease-in-out infinite alternate,
+    textPulse 4s ease-in-out infinite,
+    textMove 8s ease-in-out infinite;
+}
+
+/* Gradually shifts the text's background gradient from silver to black */
+@keyframes textColorShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Pulses the text size in and out */
+@keyframes textPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+/* Subtle motion side to side with a slight rotation for extra complexity */
+@keyframes textMove {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(20px) rotate(2deg);
+  }
+  50% {
+    transform: translateX(-20px) rotate(-2deg);
+  }
+  75% {
+    transform: translateX(20px) rotate(2deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
